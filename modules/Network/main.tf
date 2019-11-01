@@ -200,6 +200,10 @@ resource "aws_security_group" "db-access-sec" {
         protocol = "tcp"
         cidr_blocks = ["192.168.40.0/24"]
     }  
+
+    tags = {
+      Name = "DB internal security group"
+    }
 }
 
 resource "aws_security_group" "default-practice-access-sec" {
