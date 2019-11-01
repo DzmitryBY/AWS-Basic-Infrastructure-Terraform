@@ -1,5 +1,3 @@
-
-
 terraform {
     required_version = ">= 0.12"
 }
@@ -27,7 +25,14 @@ resource "aws_instance" "NAT" {
     source_dest_check = false
     associate_public_ip_address = true
     depends_on = ["module.Network"]
-
+/*    provisioner "remote-exec" {
+        inline = [
+            "sudo yum update -y",
+            "sudo sh /usr/sbin/configure-pat.sh",
+            "cat  /etc/sysctl.d/10-nat-settings.conf"
+        ]
+    }
+*/
     tags = {
         Name = "NAT AZ1 instance"
     }
@@ -68,6 +73,7 @@ resource "aws_route_table" "practice-private-routeTBL-1" {
 resource "aws_route_table" "practice-private-routeTBL-2" {
     vpc_id = "${module.Network.practice-vpc-id}"
     depends_on = ["aws_instance.NAT-2"]
+
     route {
         cidr_block = "0.0.0.0/0"
         instance_id = "${aws_instance.NAT-2.id}"
@@ -140,6 +146,15 @@ resource "aws_instance" "Nginx" {
     vpc_security_group_ids = ["${module.Network.web-access-sec-id}", "${module.Network.default-access-sec-id}"]
     subnet_id = "${module.Network.practice-subnet-public-1-id}"
     depends_on = ["module.Network"]
+/*    provisioner "remote-exec" {
+    inline = [
+      "sudo yum -y update",
+      "sudo yum -y install docker",
+      "sudo systemctl start docker",
+      "sudo usermod -a -G docker ec2-user"
+    ]
+  }
+*/
     tags = {
         Name = "Nginx AZ1 LB"
     }
