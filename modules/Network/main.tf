@@ -147,7 +147,7 @@ resource "aws_security_group" "ssh-access-sec" {
         from_port = 22
         to_port = 22
         protocol = "tcp"
-        cidr_blocks = ["82.209.242.83/32", "86.57.156.77/32"]
+        cidr_blocks = ["82.209.242.86/32", "86.57.156.77/32"]
     }
     tags = {
         Name = "Practice ssh access Sec"
