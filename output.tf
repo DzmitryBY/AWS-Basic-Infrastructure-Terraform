@@ -1,4 +1,4 @@
-output "bastion-external" {
+output "bastion-external-ELASTIC" {
   value = "${aws_instance.Bastion.public_ip}"
   description = "Public bastion server IP"
 }

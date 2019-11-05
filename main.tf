@@ -197,6 +197,22 @@ resource "aws_eip" "nginx-2" {
 }
 
 
+#################################
+#Attaching Elastic IP to Bastion#
+#################################
+
+resource "aws_eip" "bastion" {
+    depends_on = ["aws_instance.Bastion"]
+    instance = "${aws_instance.Bastion.id}"
+    vpc = true
+
+    tags = {
+        Name = "Bastion ElasticIP"
+    } 
+}
+
+
+
 #############################
 #Creating web data instances#
 #############################
