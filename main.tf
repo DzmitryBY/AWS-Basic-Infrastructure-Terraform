@@ -273,3 +273,25 @@ resource "aws_instance" "db-2" {
         Name = "DB AZ2"
     }
 }
+
+#######################
+#Creating Route53 zone#
+#######################
+
+resource "aws_route53_zone" "bastion" {
+    name = "bastion.kozynda.com"  
+}
+
+
+############################################
+#Attaching route53 to point to bastion host#
+############################################
+
+resource "aws_route53_record" "www-bastion" {
+  depends_on = ["aws_eip.bastion"]
+  zone_id = "${aws_route53_zone.bastion.zone_id}"
+  name = "bastion.kozynda.com"
+  type = "A"
+  ttl = "300"
+  records = ["${aws_instance.Bastion.public_ip}"]
+}
