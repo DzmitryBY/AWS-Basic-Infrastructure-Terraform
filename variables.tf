@@ -2,8 +2,18 @@
 ### Upd. 10/30/2019
 ### Dzmitry Kozynda
 
+variable "def_tags" {
+  type = "map"
+  default = {
+    "coherent:client" : "Coherent"
+    "coherent:environment" : "Sandbox",
+    "coherent:owner" : "dmitrykozynda@coherentsolutions.com",
+    "coherent:project" : "TC - DevOps"
+  }
+}
+
 variable "instanceType" {
-    description = "Tyoe of instance to run EC2"
+    description = "Type of instance to run EC2"
     type = string
     default = "t2.micro"
     }

@@ -25,6 +25,7 @@ resource "aws_instance" "NAT" {
     source_dest_check = false
     associate_public_ip_address = true
     depends_on = ["module.Network"]
+    user_data = file("./files/configure-nat.sh")
 /*    provisioner "remote-exec" {
         inline = [
             "sudo yum update -y",
@@ -33,9 +34,7 @@ resource "aws_instance" "NAT" {
         ]
     }
 */
-    tags = {
-        Name = "NAT AZ1 instance"
-    }
+    tags = merge(map("Name", "NAT AZ1 instance"), var.def_tags)
 }
 
 resource "aws_instance" "NAT-2" {
@@ -48,7 +47,7 @@ resource "aws_instance" "NAT-2" {
     source_dest_check = false
     associate_public_ip_address = true
     depends_on = ["module.Network"]
-
+    user_data = file("./files/configure-nat.sh")
     tags = {
         Name = "NAT AZ2 instance"
     }
